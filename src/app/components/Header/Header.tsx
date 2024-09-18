@@ -15,26 +15,26 @@ const Icon: React.FC<IconProps> = ({ src, alt, additionalClasses = "" }) => (
 
 export default function Header() {
   return (
-    <header className="px-6 flex items-center justify-between">
+    <header className="bg-white px-6 flex items-center justify-between pr-6">
       <div className="flex items-center max-h-[86px]">
-        <div className="mr-16 xs:mr-8 xxs:mr-5">
+        <div className="xl:mr-16 lg:mr-4">
           <p className="text-xl font-bold text-gray-900">HarmonyHR</p>
         </div>
         <nav className="text-lg flex mt-8 min-h-14 hidden lg:flex">
           {["Home", "My Info", "People", "Hiring", "Reports", "Files"].map((link) => (
-            <p
-              className={`hover:bg-[#DAE6F2] cursor-pointer p-4 rounded-t-lg ${link === "My Info" && "min-w-24"}`}
+            <a
+              className={`hover:bg-[#DAE6F2]  cursor-pointer p-4 rounded-t-lg ${link === "My Info" && "min-w-24 bg-[#DAE6F2]"}`}
               key={link}
             >
               {link}
-            </p>
+            </a>
           ))}
         </nav>
       </div>
-      <div className="flex items-center mt-4 xs:mt-2 xxs:mt-2">
-        <div className="relative mr-8 xs:mr-0 xxs:mr-0 sm:ml-4">
+      <div className="flex items-center xxs:m-4 xs:m-4 sm:m-4 md:m-4 lg:m-0">
+        <div className="relative mr-8 xs:mr-0 xxs:mr-0">
           <InputDemo
-            className="pl-10 xxs:w-[48px] xs:w-[48px] sm:w-[0px] md:w-[120px] xl:w-[300px] 2xl:w-[395px] h-8"
+            className="pl-10 xxs:w-[40px] xs:w-[40px] md:w-[105px] xl:w-[300px] 2xl:w-[395px] h-8"
             placeholder="Search"
           />
           <Image
