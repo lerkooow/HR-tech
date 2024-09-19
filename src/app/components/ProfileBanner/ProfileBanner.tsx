@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { SelectDemo } from "../Select/Select";
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { ApolloError, gql, useMutation, useQuery } from "@apollo/client";
 import { useUserStore } from "@/hooks/useStore";
 import { TailSpin } from "react-loader-spinner";
 import { useEffect } from "react";
@@ -45,35 +45,40 @@ export default function ProfileBanner() {
 
   useEffect(() => {
     const refreshAccessToken = async () => {
-      if (error?.graphQLErrors[0]?.extensions?.code === "UNAUTHENTICATED") {
-        const refreshToken = localStorage.getItem("refresh_token");
-        if (!refreshToken || error?.graphQLErrors[0]?.extensions?.code === "UNAUTHENTICATED") {
+      const refreshToken = localStorage.getItem("refresh_token");
+
+      if (!refreshToken) {
+        localStorage.clear();
+        router.push("/");
+      }
+
+      try {
+        const response = await refresh({
+          variables: { refreshToken },
+        });
+
+        const { access_token } = response.data.refreshToken;
+        localStorage.setItem("access_token", access_token);
+
+        await refetchUser({
+          context: {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          },
+        });
+      } catch (err) {
+        if (err instanceof ApolloError && err?.graphQLErrors[0]?.extensions?.code === "UNAUTHENTICATED") {
           localStorage.clear();
           router.push("/");
         }
-
-        try {
-          const response = await refresh({
-            variables: { refreshToken },
-          });
-
-          const { access_token } = response.data.refreshToken;
-          localStorage.setItem("access_token", access_token);
-
-          await refetchUser({
-            context: {
-              headers: {
-                Authorization: `Bearer ${access_token}`,
-              },
-            },
-          });
-        } catch (err) {
-          console.error("Error refreshing access token:", err);
-        }
+        console.error("Error refreshing access token:", err);
       }
     };
 
-    refreshAccessToken();
+    if (error?.graphQLErrors[0]?.extensions?.code === "UNAUTHENTICATED") {
+      refreshAccessToken();
+    }
   }, [error, refresh, refetchUser, router]);
 
   const photoStub = () => {

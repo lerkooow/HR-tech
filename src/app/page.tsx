@@ -9,13 +9,14 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [login, { loading, error }] = useMutation(LOGIN_MUTATION);
   const router = useRouter();
-  const refreshToken = localStorage.getItem("refresh_token");
 
   useEffect(() => {
+    const refreshToken = localStorage.getItem("refresh_token");
+
     if (refreshToken) {
       router.push("/my-info/time-off");
     }
-  });
+  }, [router]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
