@@ -8,8 +8,8 @@ export default function ProfileBanner() {
         <Image src="/images/photo.png" width={150} height={150} alt="avatar" />
       </div>
       <div className="flex flex-col w-full md:w-auto">
-        <div className="flex flex-row justify-between w-full mb-5 sm:mt-6 items-start">
-          <div className="mb-4 md:mb-0 md:mr-9 max-w-[60px] max-h-[60px] xxs:flex xs:flex sm:flex md:hidden">
+        <div className="flex flex-row justify-between w-full mb-5 sm:mt-6 items-start relative">
+          <div className="mb-4 md:mb-0 md:mr-9 max-w-[60px] max-h-[60px] xxs:flex xs:flex sm:flex md:hidden relative z-10">
             <Image src="/images/photo.png" width={150} height={150} alt="avatar" />
           </div>
           <p className="text-3xl xxs:text-xl xs:text-xl md:text-3xl xxs:ml-[22px] sm:ml-0 font-semibold md:text-left mr-[100px] xxs:mr-[10px] xs:mr-[50px]">
