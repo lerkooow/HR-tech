@@ -45,14 +45,10 @@ export default function ProfileBanner() {
 
   useEffect(() => {
     const refreshAccessToken = async () => {
-      if (
-        error &&
-        error.graphQLErrors &&
-        error.graphQLErrors[0].extensions &&
-        error.graphQLErrors[0].extensions.code === "UNAUTHENTICATED"
-      ) {
+      if (error?.graphQLErrors[0]?.extensions?.code === "UNAUTHENTICATED") {
         const refreshToken = localStorage.getItem("refresh_token");
-        if (!refreshToken) {
+        if (!refreshToken || error?.graphQLErrors[0]?.extensions?.code === "UNAUTHENTICATED") {
+          localStorage.clear();
           router.push("/");
         }
 

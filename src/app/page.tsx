@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { LOGIN_MUTATION } from "../graphql/mutations";
 import { useRouter } from "next/navigation";
@@ -9,6 +9,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [login, { loading, error }] = useMutation(LOGIN_MUTATION);
   const router = useRouter();
+  const refreshToken = localStorage.getItem("refresh_token");
+
+  useEffect(() => {
+    if (refreshToken) {
+      router.push("/my-info/time-off");
+    }
+  });
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,10 +27,10 @@ export default function Login() {
 
       const { access_token, refresh_token } = response.data.login;
 
+      router.push("/my-info/time-off");
+
       localStorage.setItem("access_token", access_token);
       localStorage.setItem("refresh_token", refresh_token);
-
-      router.push("/my-info/time-off");
     } catch (e) {
       console.error("Error during login", e);
     }
