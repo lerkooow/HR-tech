@@ -5,7 +5,7 @@
 
 ## Ссылка на проект:
 
-[...](https://hr-tech-qh2izf6dc-valeriias-projects-e196bb13.vercel.app/my-info/time-off)
+[Deploy](https://hr-tech-qh2izf6dc-valeriias-projects-e196bb13.vercel.app/my-info/time-off)
 
 ## Установка и запуск приложения:
 
